@@ -2,7 +2,7 @@ local function sit_on_stair(pos, node, player)
   -- Get opposite horizontal rotation
   local rotation = emote.util.facedir_to_look_horizontal((node.param2 + 2) % 4)
   player:set_look_horizontal(rotation)
-  
+
   -- Teleport player to adjusted position
   local sit_pos = {
     x = pos.x,
@@ -10,12 +10,16 @@ local function sit_on_stair(pos, node, player)
     z = pos.z
   }
   player:set_pos(sit_pos)
+
   -- Trigger sit emote
   minetest.after(0.25, function()
     emote.start(player, "sit")
-end)
-
+    minetest.after(0.1, function()
+      player:set_eye_offset({x = 0, y = 6, z = 0}, {x = 0, y = 0, z = 0})
+    end)
+  end)
 end
+
 
 
 
